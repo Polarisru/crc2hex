@@ -1,8 +1,5 @@
 #pragma once
 
-namespace volz
-{
-/// @brief a class that defines the error numbers and texts.
 class CErrorNumber
 {
 public:
@@ -92,4 +89,3 @@ public:
         return "unknown error";
     }
 };
-}

@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="crc_cpp" />
+		<Option title="crc2hex" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-f can_auto.hex -t CRC32" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -35,8 +36,8 @@
 		<Unit filename="src/CErrorNumber.hpp" />
 		<Unit filename="src/app.cpp" />
 		<Unit filename="src/app.hpp" />
-		<Unit filename="src/crc16.cpp" />
-		<Unit filename="src/crc16.hpp" />
+		<Unit filename="src/crc.cpp" />
+		<Unit filename="src/crc.hpp" />
 		<Unit filename="src/cxxopts.hpp" />
 		<Unit filename="src/ihex.cpp" />
 		<Unit filename="src/ihex.hpp" />
