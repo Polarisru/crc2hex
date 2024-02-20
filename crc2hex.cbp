@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/crc_cpp" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/crc2hex" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -17,15 +17,18 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/crc_cpp" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/crc2hex" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-f THALES_EMA_COM.hex -t CRC16  -a 0 -l 0" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=gnu++14" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-static" />
 				</Linker>
 			</Target>
 		</Build>

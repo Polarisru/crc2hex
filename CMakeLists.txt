@@ -1,7 +1,7 @@
 # usage:  cmake -G "MinGW Makefiles" . -Bbuild
 #         cmake --build ./build
 cmake_minimum_required (VERSION 3.5)
-project (cortex_crc)
+project (crc2hex)
 
 enable_language(C ASM)
 set(CMAKE_C_STANDARD 99)
@@ -18,8 +18,7 @@ add_definitions("-DGIT_BRANCH=\"$ENV{GIT_BRANCH}\"")
 include_directories(src)
 
 # add all files from directory to sources
-file(GLOB_RECURSE sources	src/*.c src/*.h)
-#set(sources app.c	main.c)
+file(GLOB_RECURSE sources	src/*.cpp src/*.hpp)
 
 # set output directory for generated binary file
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
