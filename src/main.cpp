@@ -54,7 +54,7 @@ void parse(int argc, const char* argv[], pApp& params)
 
   if (result.count("a"))
   {
-    // Set device ID
+    // Set address for CRC placement, 0 means the physical end of file
     params.at_addr = result["a"].as<string>();
   } else
   {
@@ -63,7 +63,7 @@ void parse(int argc, const char* argv[], pApp& params)
 
   if (result.count("l"))
   {
-    // Set device ID
+    // Set length of the HEX file (will be padded with 0xFF), 0 means no padding
     params.len = result["l"].as<string>();
   } else
   {
@@ -72,7 +72,7 @@ void parse(int argc, const char* argv[], pApp& params)
 
   if (result.count("t"))
   {
-    // Set HEX file name
+    // Set CRC type (CRC16/CRC32)
     params.type = result["t"].as<string>();
   } else
   {
