@@ -11,6 +11,7 @@ struct pApp {
   string type;
   string at_addr;
   string len;
+  string endianness;
 };
 
 class App {

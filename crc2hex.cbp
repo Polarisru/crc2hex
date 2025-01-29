@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-f thales_protocol.hex -t CRC16 -a 7000 -l 2000" />
+				<Option parameters="-f prot.hex -t CRC16 -a 4F00 -l 4F00" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>

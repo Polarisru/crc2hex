@@ -72,14 +72,30 @@ void App::add()
   switch (type)
   {
     case crc_type::CRC16:
-      data.push_back((uint8_t)(crc >> 8));
-      data.push_back((uint8_t)(crc & 0xFF));
+      if (parameters.endianness == "BIG")
+      {
+        data.push_back((uint8_t)(crc >> 8));
+        data.push_back((uint8_t)(crc & 0xFF));
+      } else
+      {
+        data.push_back((uint8_t)(crc & 0xFF));
+        data.push_back((uint8_t)(crc >> 8));
+      }
       break;
     case crc_type::CRC32:
-      data.push_back((uint8_t)(crc >> 24));
-      data.push_back((uint8_t)(crc >> 16));
-      data.push_back((uint8_t)(crc >> 8));
-      data.push_back((uint8_t)(crc & 0xFF));
+      if (parameters.endianness == "BIG")
+      {
+        data.push_back((uint8_t)(crc >> 24));
+        data.push_back((uint8_t)(crc >> 16));
+        data.push_back((uint8_t)(crc >> 8));
+        data.push_back((uint8_t)(crc & 0xFF));
+      } else
+      {
+        data.push_back((uint8_t)(crc & 0xFF));
+        data.push_back((uint8_t)(crc >> 8));
+        data.push_back((uint8_t)(crc >> 16));
+        data.push_back((uint8_t)(crc >> 24));
+      }
       break;
   }
   hexfile.append(addr, data);

@@ -25,6 +25,7 @@ void parse(int argc, const char* argv[], pApp& params)
       ("f,file", "Intel HEX file", cxxopts::value<string>(), "FILE")
       ("a,address", "Add to address: xxxx", cxxopts::value<string>()->default_value("F000"), "XXXXh")
       ("l,length", "Length of data block: xxxx", cxxopts::value<string>()->default_value("F000"), "XXXXh")
+      ("e,endianness", "Set endianness of appended CRC: BIG/LITTLE", cxxopts::value<string>()->default_value("BIG"), "XXXX")
       ("v,version", "Print software version")
       ("h,help", "Print usage screen")
   ;
@@ -77,6 +78,15 @@ void parse(int argc, const char* argv[], pApp& params)
   } else
   {
     params.type = "CRC16";
+  }
+
+  if (result.count("e"))
+  {
+    // Set endianness (BIG/LITTLE)
+    params.endianness = result["e"].as<string>();
+  } else
+  {
+    params.endianness = "BIG";
   }
 }
 
