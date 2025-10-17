@@ -22,7 +22,9 @@ void parse(int argc, const char* argv[], pApp& params)
       .allow_unrecognised_options();
   options.add_options()
       ("t,type", "CRC type (CRC16/CRC32)", cxxopts::value<string>(), "CRC")
-      ("f,file", "Intel HEX file", cxxopts::value<string>(), "FILE")
+      ("i,input", "Input Intel HEX file", cxxopts::value<string>(), "FILE")
+      ("o,output", "Input Intel HEX file", cxxopts::value<string>(), "FILE")
+      ("f,fill", "Fill all gaps with hex value: xx", cxxopts::value<string>()->default_value("FF"), "XXh")
       ("a,address", "Add to address: xxxx", cxxopts::value<string>()->default_value("F000"), "XXXXh")
       ("l,length", "Length of data block: xxxx", cxxopts::value<string>()->default_value("F000"), "XXXXh")
       ("e,endianness", "Set endianness of appended CRC: BIG/LITTLE", cxxopts::value<string>()->default_value("BIG"), "XXXX")
@@ -47,11 +49,23 @@ void parse(int argc, const char* argv[], pApp& params)
     exit(0);
   }
 
-  if (result.count("f"))
+  if (result.count("i"))
   {
-    // Set HEX file name
-    params.f_name = result["f"].as<string>();
+    // Set input HEX file name
+    params.i_fname = result["i"].as<string>();
   }
+
+  if (result.count("o"))
+  {
+    // Set output HEX file name
+    params.o_fname = result["o"].as<string>();
+  } else
+  {
+    params.o_fname = params.i_fname;
+  }
+
+  // Hex value to fill gaps
+  params.fill_value = result["f"].as<string>();
 
   if (result.count("a"))
   {
@@ -64,7 +78,7 @@ void parse(int argc, const char* argv[], pApp& params)
 
   if (result.count("l"))
   {
-    // Set length of the HEX file (will be padded with 0xFF), 0 means no padding
+    // Set length of the HEX file (will be padded with fill_value), 0 means no padding
     params.len = result["l"].as<string>();
   } else
   {
@@ -97,7 +111,7 @@ int main(int argc, const char* argv[])
     pApp params;
     parse(argc, argv, params);
     cout << title << endl;
-    if (params.f_name.empty())
+    if (params.i_fname.empty())
     {
       cout << "Nothing to do, exiting" << endl;
       exit(0);

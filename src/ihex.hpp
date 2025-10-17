@@ -31,7 +31,14 @@ public:
     /// @param addr Address to append data
     /// @param data Data to append
     /// @return true, if operation was successful
-    bool append(const uint32_t &addr, const vector<uint8_t> &data);
+    bool append(const string &filename, const uint32_t &addr, const vector<uint8_t> &data);
+
+    /// @brief Write data to a hexfile
+    /// @param filename The name of the file to write
+    /// @param start_addr Starting address to write data
+    /// @param data Data to write
+    /// @return true, if operation was successful
+    bool write(const string& filename, const uint32_t &start_addr, const vector<uint8_t> &data);
 
     /// @brief the number of databytes
     size_t size() const {return m_data.size();}
@@ -46,6 +53,8 @@ public:
     const vector<uint8_t>& get() const {return m_data;}
 
     size_t getLast() {return (m_data.size() + first_addr);}
+
+    size_t getFirst() {return first_addr;}
 
     /// @brief set the internal iterator to the next address which is not 0xff
     void next() {
