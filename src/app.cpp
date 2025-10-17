@@ -19,23 +19,23 @@ void App::calc_crc()
     out_data.insert(out_data.end(), crc_extra_len, fill_val);
   }
 
-  cout << "Calculated CRC:\t\t";
+  std::cout << "Calculated CRC:\t\t";
 
   switch (type)
   {
     case crc_type::CRC16:
       (void)crc_mod.calculateCRC16(out_data, len - hexfile.getFirst());
       crc = crc_mod.getCRC16();
-      cout << "0x" << setw(4) << setfill('0') << uppercase << hex << crc;
+      std::cout << "0x" << std::setw(4) << std::setfill('0') << std::uppercase << std::hex << crc;
       break;
     case crc_type::CRC32:
       (void)crc_mod.calculateCRC32(out_data, len - hexfile.getFirst());
       crc = crc_mod.getCRC32();
-      cout << "0x" << setw(8) << setfill('0') << uppercase << hex << crc;
+      std::cout << "0x" << std::setw(8) << std::setfill('0') << std::uppercase << std::hex << crc;
       break;
   }
 
-  cout << endl;
+  std::cout << std::endl;
 }
 
 /** \brief Compare firmware with firmware from device
@@ -43,11 +43,11 @@ void App::calc_crc()
  * \return void
  *
  */
-void App::add_crc(const string& filename)
+void App::add_crc(const std::string& filename)
 {
-  vector<uint8_t> data;
+  std::vector<uint8_t> data;
 
-  cout << "Appending CRC:\t\t";
+  std::cout << "Appending CRC:\t\t";
 
   if (addr == 0)
   {
@@ -84,15 +84,15 @@ void App::add_crc(const string& filename)
       }
       break;
     default:
-      cout << "Wrong CRC type!";
+      std::cout << "Wrong CRC type!";
       return;
   }
   hexfile.append(filename, addr, data);
 
-  cout << "OK";
+  std::cout << "OK";
 }
 
-void App::write_hex(const string& filename)
+void App::write_hex(const std::string& filename)
 {
   hexfile.write(filename, hexfile.getFirst(), out_data);
 }
@@ -146,20 +146,20 @@ void App::process()
 
   if (hexfile.load(parameters.i_fname) == false)
   {
-    cout << "Can't open file: " << parameters.i_fname << endl;
+    std::cout << "Can't open file: " << parameters.i_fname << std::endl;
     throw CErrorNumber::number::hexfileError;
   }
 
-  cout << "File: " << parameters.i_fname << "\t\tSize: " << hexfile.size() << " bytes" << endl;
-  cout << "CRC type: " << parameters.type << "\t\tAdd at: ";
+  std::cout << "File: " << parameters.i_fname << "\t\tSize: " << hexfile.size() << " bytes" << std::endl;
+  std::cout << "CRC type: " << parameters.type << "\t\tAdd at: ";
   if (addr == 0)
   {
-    cout << "END";
+    std::cout << "END";
   } else
   {
-    cout << "0x" << setw(8) << setfill('0') << uppercase << hex << addr;
+    std::cout << "0x" << std::setw(8) << std::setfill('0') << std::uppercase << std::hex << addr;
   }
-  cout << endl;
+  std::cout << std::endl;
 
   calc_crc();
 
@@ -169,7 +169,7 @@ void App::process()
   }
   catch (...)
   {
-    cout << "Can't open file: " << parameters.o_fname << endl;
+    std::cout << "Can't open file: " << parameters.o_fname << std::endl;
     throw CErrorNumber::number::fileNotWritten;
   }
 

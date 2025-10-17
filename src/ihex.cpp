@@ -2,15 +2,15 @@
 #include <filesystem>
 #include "ihex.hpp"
 
-string conv_to_string(uint16_t address, RecordType type, const vector<uint8_t> &data)
+std::string conv_to_string(uint16_t address, RecordType type, const std::vector<uint8_t> &data)
 {
-  stringstream ss;
+  std::stringstream ss;
   uint8_t crc = 0;
 
   /**< Add size */
-  ss << ":" << setw(2) << setfill('0') << uppercase << hex << static_cast<int>(data.size());
+  ss << ":" << std::setw(2) << std::setfill('0') << std::uppercase << std::hex << static_cast<int>(data.size());
   /**< Add address and record type */
-  ss << setw(4) << address << setw(2) << static_cast<int>(type);
+  ss << std::setw(4) << address << std::setw(2) << static_cast<int>(type);
   crc += static_cast<uint8_t>(data.size());
   crc += (uint8_t)(address >> 8);
   crc += (uint8_t)(address & 0xFF);
@@ -18,12 +18,12 @@ string conv_to_string(uint16_t address, RecordType type, const vector<uint8_t> &
   /**< Process data */
   for (size_t i = 0; i < data.size(); i++)
   {
-    ss << setw(2) << static_cast<int>(data[i]);
+    ss << std::setw(2) << static_cast<int>(data[i]);
     crc += data[i];
   }
   crc = (uint8_t)(0x100 - crc);
   /**< Add CRC */
-  ss << setw(2) << static_cast<int>(crc);
+  ss << std::setw(2) << static_cast<int>(crc);
 
   return ss.str();
 }
@@ -43,7 +43,7 @@ static uint8_t ihex_checksum(uint8_t byte_count, uint16_t addr, uint8_t rectype,
 }
 
 // Format one Intel HEX record line
-static string make_record(uint8_t byte_count, uint16_t addr, uint8_t rectype, const uint8_t* data, size_t len)
+static std::string make_record(uint8_t byte_count, uint16_t addr, uint8_t rectype, const uint8_t* data, size_t len)
 {
   std::ostringstream oss;
   oss << ':';
@@ -60,13 +60,13 @@ static string make_record(uint8_t byte_count, uint16_t addr, uint8_t rectype, co
   return oss.str();
 }
 
-bool iHex::load(const string &filename)
+bool iHex::load(const std::string &filename)
 {
   first_addr = UINT_MAX;
 
   m_data.clear();
 
-  ifstream infile(filename);
+  std::ifstream infile(filename);
   if (!infile.is_open())
   {
     return false;
@@ -104,7 +104,7 @@ bool iHex::load(const string &filename)
   return true;
 }
 
-bool iHex::append(const string &filename, const uint32_t &addr, const std::vector<uint8_t> &data)
+bool iHex::append(const std::string &filename, const uint32_t &addr, const std::vector<uint8_t> &data)
 {
   uint32_t address = addr;
 
@@ -197,10 +197,10 @@ bool iHex::append(const string &filename, const uint32_t &addr, const std::vecto
   return true;
 }
 
-bool iHex::write(const string& filename, const uint32_t &start_addr, const vector<uint8_t> &data)
+bool iHex::write(const std::string& filename, const uint32_t &start_addr, const std::vector<uint8_t> &data)
 {
   // Write to a temp file first for safety
-  string tmp = filename + ".tmp";
+  std::string tmp = filename + ".tmp";
   std::ofstream out(tmp, std::ios::trunc);
   if (!out.is_open()) return false;
 
@@ -214,7 +214,7 @@ bool iHex::write(const string& filename, const uint32_t &start_addr, const vecto
       static_cast<uint8_t>(high16 >> 8),
       static_cast<uint8_t>(high16 & 0xFFU)
     };
-    string rec = make_record(2,
+    std::string rec = make_record(2,
                              0x0000,
                              static_cast<uint8_t>(RecordType::ExtendedLinearAddress),
                              payload,
@@ -254,7 +254,7 @@ bool iHex::write(const string& filename, const uint32_t &start_addr, const vecto
     // bytes until 64KiB boundary
     size_t room_in_page = 0x10000U - low16;
     size_t bc = std::min(chunk, std::min(remain, room_in_page));
-    string rec = make_record(static_cast<uint8_t>(bc),
+    std::string rec = make_record(static_cast<uint8_t>(bc),
                              low16,
                              static_cast<uint8_t>(RecordType::Data),
                              &data[offset],
@@ -273,7 +273,7 @@ bool iHex::write(const string& filename, const uint32_t &start_addr, const vecto
 
   // EOF must be last
   {
-    string eof = make_record(0, 0x0000, static_cast<uint8_t>(RecordType::EndOfFile), nullptr, 0);
+    std::string eof = make_record(0, 0x0000, static_cast<uint8_t>(RecordType::EndOfFile), nullptr, 0);
     out << eof << '\n';
     if (!out)
     {

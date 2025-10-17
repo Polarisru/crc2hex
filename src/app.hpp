@@ -1,19 +1,17 @@
 #pragma once
 
-using namespace std;
-
 #include <string>
 #include "ihex.hpp"
 #include "crc.hpp"
 
 struct pApp {
-  string i_fname;
-  string o_fname;
-  string type;
-  string at_addr;
-  string len;
-  string fill_value;
-  string endianness;
+  std::string i_fname;
+  std::string o_fname;
+  std::string type;
+  std::string at_addr;
+  std::string len;
+  std::string fill_value;
+  std::string endianness;
 };
 
 class App {
@@ -32,6 +30,6 @@ private:
   std::vector<uint8_t> out_data;
 
   void calc_crc();
-  void add_crc(const string& filename);
-  void write_hex(const string& filename);
+  void add_crc(const std::string& filename);
+  void write_hex(const std::string& filename);
 };

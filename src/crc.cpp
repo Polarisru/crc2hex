@@ -68,7 +68,7 @@ static const uint32_t CRC32_Table[256] =
   0xB3667A2EU, 0xC4614AB8U, 0x5D681B02U, 0x2A6F2B94U, 0xB40BBE37U, 0xC30C8EA1U, 0x5A05DF1BU, 0x2D02EF8DU
 };
 
-uint16_t CRC::calculateCRC16(const vector<uint8_t>& data, size_t len)
+uint16_t CRC::calculateCRC16(const std::vector<uint8_t>& data, size_t len)
 {
   uint8_t index;
   crc16 = CRC16_INIT_VAL;
@@ -83,7 +83,7 @@ uint16_t CRC::calculateCRC16(const vector<uint8_t>& data, size_t len)
   return crc16;
 }
 
-uint32_t CRC::calculateCRC32(const vector<uint8_t>& data, size_t len)
+uint32_t CRC::calculateCRC32(const std::vector<uint8_t>& data, size_t len)
 {
   crc32 = CRC32_INIT_VAL;
 

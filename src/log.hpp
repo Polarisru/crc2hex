@@ -3,8 +3,6 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 enum log_level {
   LOG_LEVEL_INFO,
   LOG_LEVEL_WARNING,
@@ -48,7 +46,7 @@ public:
     }
     ~LOG() {
         if(opened) {
-            cout << endl;
+            cout << std::endl;
         }
         opened = false;
     }
@@ -64,8 +62,8 @@ public:
 private:
     bool opened = false;
     log_level msglevel = LOG_LEVEL_INFO;
-    string getLabel(log_level type) const {
-        string label;
+    std::string getLabel(log_level type) const {
+        std::string label;
         switch(type) {
             case LOG_LEVEL_INFO:
               return "INFO";

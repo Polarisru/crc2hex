@@ -1,7 +1,5 @@
 #pragma once
 
-using namespace std;
-
 #ifndef JOB_BASE_NAME
   #define JOB_BASE_NAME "unknown"
 #endif

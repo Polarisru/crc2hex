@@ -4,18 +4,16 @@
 #include <iostream>
 #include <iomanip>
 
-using namespace std;
-
 class Progress {
 public:
-  Progress(const string& prefix, int top) {
+  Progress(const std::string& prefix, int top) {
     top_ = top;
     pos_ = 0;
     prefix_ = prefix;
     show();
   }
   ~Progress() {
-    cout << endl;
+    std::cout << std::endl;
   }
   void inc() {
     pos_++;
@@ -24,11 +22,11 @@ public:
 private:
   int top_;
   int pos_;
-  string prefix_;
+  std::string prefix_;
   void show() {
     double f_pos = static_cast<double>(pos_) / top_ * 100;
-    cout << fixed;
-    cout.precision(1);
-    cout << "\r" << prefix_ << ": \t[" << setw(4) << setfill(' ') << f_pos << "%]" << flush;
+    std::cout << std::fixed;
+    std::cout.precision(1);
+    std::cout << "\r" << prefix_ << ": \t[" << std::setw(4) << std::setfill(' ') << f_pos << "%]" << std::flush;
   }
 };

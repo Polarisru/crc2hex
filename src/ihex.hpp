@@ -6,8 +6,6 @@
 #include <fstream>
 #include <climits>
 
-using namespace std;
-
 enum class RecordType
 {
     Data                   = 0,
@@ -25,20 +23,20 @@ public:
     /// @brief loads the data from a hexfile
     /// @param filename The name of the file to read
     /// @return true, if the load was successful
-    bool load(const string& filename);
+    bool load(const std::string& filename);
 
     /// @brief Add data to a hexfile
     /// @param addr Address to append data
     /// @param data Data to append
     /// @return true, if operation was successful
-    bool append(const string &filename, const uint32_t &addr, const vector<uint8_t> &data);
+    bool append(const std::string &filename, const uint32_t &addr, const std::vector<uint8_t> &data);
 
     /// @brief Write data to a hexfile
     /// @param filename The name of the file to write
     /// @param start_addr Starting address to write data
     /// @param data Data to write
     /// @return true, if operation was successful
-    bool write(const string& filename, const uint32_t &start_addr, const vector<uint8_t> &data);
+    bool write(const std::string& filename, const uint32_t &start_addr, const std::vector<uint8_t> &data);
 
     /// @brief the number of databytes
     size_t size() const {return m_data.size();}
@@ -46,11 +44,11 @@ public:
     /// @brief accessor
     uint8_t operator [](uint32_t index) {return m_data[index];}
 
-    vector <uint8_t>::iterator begin() {return m_data.begin();}
+    std::vector <uint8_t>::iterator begin() {return m_data.begin();}
 
-    vector <uint8_t>::iterator end() {return m_data.end();}
+    std::vector <uint8_t>::iterator end() {return m_data.end();}
 
-    const vector<uint8_t>& get() const {return m_data;}
+    const std::vector<uint8_t>& get() const {return m_data;}
 
     size_t getLast() {return (m_data.size() + first_addr);}
 
@@ -76,10 +74,10 @@ public:
 
 private:
 
-    class Line : public string {
+    class Line : public std::string {
     public:
         Line() {}
-        Line(const string& str) : string(str) {}
+        Line(const std::string& str) : std::string(str) {}
 
         /// @brief reads the hex value inside the string.
         /// If the index is outside the string, 0 is returned.
@@ -100,12 +98,12 @@ private:
     };
 
     /// @brief holds the loaded data (if load was successful)
-    vector<uint8_t> m_data;
+    std::vector<uint8_t> m_data;
 
     /// @brief points to an address in the data area
     uint32_t m_iterator;
 
-    string file_name;
+    std::string file_name;
 
     uint32_t first_addr;
 };
