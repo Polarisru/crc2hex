@@ -118,25 +118,11 @@ void App::process()
   try
   {
     addr = std::stoi(parameters.at_addr, nullptr, 16);
-  }
-  catch (const std::invalid_argument& e)
-  {
-    throw CErrorNumber::number::wrongParameter;
-  }
-  try
-  {
     len = std::stoi(parameters.len, nullptr, 16);
     if (addr == 0)
     {
       len = 0;
     }
-  }
-  catch (const std::invalid_argument& e)
-  {
-    throw CErrorNumber::number::wrongParameter;
-  }
-  try
-  {
     fill_val = static_cast<uint8_t>(std::stoi(parameters.fill_value, nullptr, 16));
   }
   catch (const std::invalid_argument& e)
