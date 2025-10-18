@@ -62,7 +62,7 @@ static std::string make_record(uint8_t byte_count, uint16_t addr, uint8_t rectyp
 
 bool iHex::load(const std::string &filename)
 {
-  first_addr = UINT_MAX;
+  m_first_addr = UINT_MAX;
 
   m_data.clear();
 
@@ -81,14 +81,18 @@ bool iHex::load(const std::string &filename)
     {
       uint32_t offset = line.getOffset();
       /**< Hex file can have offset and must be aligned to address 0 */
-      if (offset < first_addr)
+      if (offset < m_first_addr)
       {
-        first_addr = offset;
+        m_first_addr = offset;
       }
       uint32_t size = line.getLen();
-      while (m_data.size() < offset + size)
+//      while (m_data.size() < offset + size)
+//      {
+//        m_data.push_back(0xFFU);
+//      }
+      if (m_data.size() < offset + size)
       {
-        m_data.push_back(0xFFU);
+        m_data.resize(offset + size, 0xFFU);
       }
       for (uint32_t i = 0; i < size; i++)
       {
@@ -97,9 +101,9 @@ bool iHex::load(const std::string &filename)
     }
   }
 
-  m_data.erase(m_data.begin(), m_data.begin() + first_addr);
+  m_data.erase(m_data.begin(), m_data.begin() + m_first_addr);
 
-  file_name = filename;
+  m_file_name = filename;
 
   return true;
 }

@@ -122,10 +122,10 @@ int main(int argc, const char* argv[])
     std::cout << "ERROR: " << e.what() << std::endl;
     exit(1);
   }
-  catch (CErrorNumber::number num)
+  catch (const CErrorNumber& e)
   {
-    std::cout << "ERROR: " << CErrorNumber::name(num) << std::endl;
-    return static_cast<int>(num);
+    std::cout << "ERROR: " << e.what() << std::endl;
+    return e.getErrorCode();
   }
   return 0;
 }

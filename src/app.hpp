@@ -16,18 +16,19 @@ struct pApp {
 
 class App {
 public:
-  App(const pApp& param) : parameters(param) {};
-  ~App() {};
+  App(const pApp& param);
+  ~App() = default;
   void process();
 private:
-  pApp parameters;
   iHex hexfile;
-  crc_type type;
-  uint32_t addr;
-  uint32_t len;
-  uint32_t crc;
-  uint8_t  fill_val;
+  crc_type type = crc_type::CRC16;
+  uint32_t addr = 0;
+  uint32_t len = 0;
+  uint32_t crc = 0;
+  uint8_t  fill_val = 0xFFU;
+  bool is_big_endian = false;
   std::vector<uint8_t> out_data;
+  std::string out_file;
 
   void calc_crc();
   void add_crc(const std::string& filename);

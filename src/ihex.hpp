@@ -50,9 +50,9 @@ public:
 
     const std::vector<uint8_t>& get() const {return m_data;}
 
-    size_t getLast() {return (m_data.size() + first_addr);}
+    uint32_t getStartAddress() const { return m_first_addr; }
 
-    size_t getFirst() {return first_addr;}
+    uint32_t getEndAddress() const { return m_first_addr + m_data.size(); }
 
     /// @brief set the internal iterator to the next address which is not 0xff
     void next() {
@@ -103,7 +103,7 @@ private:
     /// @brief points to an address in the data area
     uint32_t m_iterator;
 
-    std::string file_name;
+    std::string m_file_name;
 
-    uint32_t first_addr;
+    uint32_t m_first_addr;
 };
